@@ -69,7 +69,8 @@ import static org.apache.aurora.scheduler.resources.ResourceType.RAM_MB;
 public class ConfigurationManager {
 
   public static final String DEDICATED_ATTRIBUTE = "dedicated";
-  public static final String DEFAULT_ALLOWED_JOB_ENVIRONMENTS = "^(prod|devel|test|staging\\d*)$";
+  public static final String DEFAULT_ALLOWED_JOB_ENVIRONMENTS =
+      "^(prod|preprod|devel|test|staging\\d*)$";
 
   private interface Validator<T> {
     void validate(T value) throws TaskDescriptionException;
