@@ -142,7 +142,7 @@ def test_include():
 
 
 BAD_ENV = ('Prod', ' prod', 'prod ', 'tEst', 'production', 'staging 2', 'stagingA')
-GOOD_ENV = ('prod', 'devel', 'test', 'staging', 'staging001', 'staging1', 'staging1234')
+GOOD_ENV = ('prod', 'preprod', 'devel', 'test', 'staging', 'staging001', 'staging1', 'staging1234')
 
 
 def test_environment_names():

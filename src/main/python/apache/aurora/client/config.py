@@ -61,8 +61,8 @@ STAGING_RE = re.compile(r'^staging\d*$')
 def __validate_env(name, config_name):
   if STAGING_RE.match(name):
     return
-  if name not in ('prod', 'devel', 'test'):
-    raise ValueError('%s should be one of "prod", "devel", "test" or '
+  if name not in ('prod', 'preprod', 'devel', 'test'):
+    raise ValueError('%s should be one of "prod", "preprod", "devel", "test" or '
                      'staging<number>!  Got %s' % (config_name, name))
 
 
