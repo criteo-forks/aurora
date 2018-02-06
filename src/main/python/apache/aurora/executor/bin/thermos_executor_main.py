@@ -190,6 +190,7 @@ app.add_option(
      action='store_true',
      help="Preserve thermos runners' environment variables for the task being run.")
 
+
 app.add_option(
     '--stop_timeout_in_secs',
     dest='stop_timeout_in_secs',
@@ -198,6 +199,16 @@ app.add_option(
     help='The maximum amount of time to wait (in seconds) when gracefully killing a task before '
          'beginning forceful termination. Graceful and forceful termination is defined in '
          'HttpLifecycleConfig (see Task Lifecycle documentation for more info on termination).')
+
+
+app.add_option(
+    '--sandbox-bind-mounts',
+    dest='sandbox_bind_mounts',
+    type=str,
+    help='Comma separated list of path bind mounted to the sandbox (command tasks only). This '
+         'should typically match Mesos Agent\'s --default_container_info for volumes (either '
+         'host_path or container_path, absolue or relative to Mesos\' sandbox',
+    default=None)
 
 
 # TODO(wickman) Consider just having the OSS version require pip installed
@@ -265,6 +276,7 @@ def initialize(options):
       status_providers=status_providers,
       sandbox_provider=UserOverrideDirectorySandboxProvider(options.execute_as_user),
       no_sandbox_create_user=options.no_create_user,
+      sandbox_bind_mounts=options.sandbox_bind_mounts,
       sandbox_mount_point=options.sandbox_mount_point,
       stop_timeout_in_secs=options.stop_timeout_in_secs
     )
@@ -285,6 +297,7 @@ def initialize(options):
       runner_provider=thermos_runner_provider,
       status_providers=status_providers,
       no_sandbox_create_user=options.no_create_user,
+      sandbox_bind_mounts=options.sandbox_bind_mounts,
       sandbox_mount_point=options.sandbox_mount_point,
       stop_timeout_in_secs=options.stop_timeout_in_secs
     )
