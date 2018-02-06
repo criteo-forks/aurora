@@ -139,6 +139,15 @@ class DirectorySandbox(SandboxInterface):
       try:
         log.debug('DirectorySandbox: chown %s:%s %s' % (self._user, grent.gr_name, self.root))
         os.chown(self.root, pwent.pw_uid, pwent.pw_gid)
+
+        mesos_sandbox_dir = os.environ['MESOS_DIRECTORY']
+        with open('/proc/self/mountinfo', 'r') as file:
+            bind_mounts = " ".join([mounts for mounts in file.readlines() if mesos_sandbox_dir in mounts])
+            sandbox_paths = [path for path in bind_mounts.split(" ") if mesos_sandbox_dir in path]
+            for path in sandbox_paths:
+                log.debug('DirectorySandbox: chown bind mount %s:%s %s' % (self._user, grent.gr_name, path))
+                os.chown(path, pwent.pw_uid, pwent.pw_gid)
+
         log.debug('DirectorySandbox: chmod 700 %s' % self.root)
         os.chmod(self.root, 0700)
       except (IOError, OSError) as e:
