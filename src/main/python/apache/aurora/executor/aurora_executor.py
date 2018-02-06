@@ -50,6 +50,7 @@ class AuroraExecutor(ExecutorBase, Observable):
       clock=time,
       no_sandbox_create_user=False,
       sandbox_mount_point=None,
+      sandbox_bind_mounts=None,
       stop_timeout_in_secs=120):
 
     ExecutorBase.__init__(self)
@@ -67,6 +68,7 @@ class AuroraExecutor(ExecutorBase, Observable):
     self._sandbox_provider = sandbox_provider
     self._no_sandbox_create_user = no_sandbox_create_user
     self._sandbox_mount_point = sandbox_mount_point
+    self._sandbox_bind_mounts = sandbox_bind_mounts
     self._stop_timeout = Amount(stop_timeout_in_secs, Time.SECONDS)
     self._kill_manager = KillManager()
     # Events that are exposed for interested entities
@@ -127,7 +129,8 @@ class AuroraExecutor(ExecutorBase, Observable):
         assigned_task,
         no_create_user=self._no_sandbox_create_user,
         mounted_volume_paths=mounted_volume_paths,
-        sandbox_mount_point=self._sandbox_mount_point)
+        sandbox_mount_point=self._sandbox_mount_point,
+        sandbox_bind_mounts=self._sandbox_bind_mounts)
     self.sandbox_initialized.set()
     try:
       propagate_deadline(self._sandbox.create, timeout=self.SANDBOX_INITIALIZATION_TIMEOUT)
