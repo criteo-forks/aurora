@@ -94,6 +94,7 @@ class DirectorySandbox(SandboxInterface):
   def __init__(self, root, user=getpass.getuser(), **kwargs):
     self._root = root
     self._user = user
+    self._sandbox_bind_mounts = kwargs.pop('sandbox_bind_mounts', None)
 
   @property
   def root(self):
@@ -138,8 +139,14 @@ class DirectorySandbox(SandboxInterface):
       try:
         log.debug('DirectorySandbox: chown %s:%s %s' % (self._user, grent.gr_name, self.root))
         os.chown(self.root, pwent.pw_uid, pwent.pw_gid)
+
         log.debug('DirectorySandbox: chmod 700 %s' % self.root)
         os.chmod(self.root, 0700)
+
+        log.debug('DirectorySandbox: bind mounts %s' % self._sandbox_bind_mounts)
+        for path in self._sandbox_bind_mounts.split(','):
+            log.debug('DirectorySandbox: chown bind mount %s:%s %s' % (self._user, grent.gr_name, path))
+            os.chown(path, pwent.pw_uid, pwent.pw_gid)
       except (IOError, OSError) as e:
         raise self.CreationError('Failed to chown/chmod the sandbox: %s' % e)
 

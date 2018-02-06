@@ -188,6 +188,14 @@ app.add_option(
      action='store_true',
      help="Preserve thermos runners' environment variables for the task being run.")
 
+app.add_option(
+    '--sandbox-bind-mounts',
+    dest='sandbox_bind_mounts',
+    type=str,
+    help='Comma separated list of path bind mounted to the sandbox (command tasks only). This '
+         'should typically match Mesos Agent\'s --default_container_info for volumes (either host_path'
+         ' or container_path, absolue or relative to Mesos\' sandbox',
+    default='')
 
 # TODO(wickman) Consider just having the OSS version require pip installed
 # thermos_runner binaries on every machine and instead of embedding the pex
@@ -254,6 +262,7 @@ def initialize(options):
       status_providers=status_providers,
       sandbox_provider=UserOverrideDirectorySandboxProvider(options.execute_as_user),
       no_sandbox_create_user=options.no_create_user,
+      sandbox_bind_mounts=options.sandbox_bind_mounts,
       sandbox_mount_point=options.sandbox_mount_point
     )
   else:
@@ -273,6 +282,7 @@ def initialize(options):
       runner_provider=thermos_runner_provider,
       status_providers=status_providers,
       no_sandbox_create_user=options.no_create_user,
+      sandbox_bind_mounts=options.sandbox_bind_mounts,
       sandbox_mount_point=options.sandbox_mount_point
     )
 
