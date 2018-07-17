@@ -102,6 +102,11 @@ public class SchedulerMain {
         arity = 1)
     public boolean allowGpuResource = false;
 
+    @Parameter(names = "-allow_network_bandwidth_resource",
+          description = "Allow jobs to request Mesos NETWORK_BANDWIDTH resource.",
+          arity = 1)
+    public boolean allowNetworkBandwidthResource = true;
+
     public enum DriverKind {
       // TODO(zmanji): Remove this option once V0_DRIVER has been proven out in production.
       // This is the original driver that libmesos shipped with. Uses unversioned protobufs, and has
@@ -249,7 +254,8 @@ public class SchedulerMain {
 
     List<Module> modules = ImmutableList.<Module>builder()
         .add(
-            new CommandLineDriverSettingsModule(options.driver, options.main.allowGpuResource),
+            new CommandLineDriverSettingsModule(options.driver,
+                    options.main.allowGpuResource, options.main.allowNetworkBandwidthResource),
             new LibMesosLoadingModule(options.main.driverImpl),
             new DurableStorageModule(),
             new MesosLogStreamModule(options.mesosLog, FlaggedZooKeeperConfig.create(options.zk)),

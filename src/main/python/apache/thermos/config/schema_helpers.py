@@ -70,12 +70,13 @@ class Units(object):
       return Resources(cpu=add_unit(r1.cpu(), r2.cpu()),
                        ram=add_unit(r1.ram(), r2.ram()),
                        disk=add_unit(r1.disk(), r2.disk()),
-                       gpu=add_unit(r1.gpu(), r2.gpu()))
+                       gpu=add_unit(r1.gpu(), r2.gpu()),
+                       networkBandwidth=add_unit(r1.networkBandwidth(), r2.networkBandwidth()))
 
     return reduce(
         add,
         map(cls.optional_resources, resources),
-        Resources(cpu=0, ram=0, disk=0, gpu=0))
+        Resources(cpu=0, ram=0, disk=0, gpu=0, networkBandwidth=0))
 
   @classmethod
   def finalization_wait_sum(cls, waits):
@@ -93,12 +94,13 @@ class Units(object):
       return Resources(cpu=max_unit(r1.cpu(), r2.cpu()),
                        ram=max_unit(r1.ram(), r2.ram()),
                        disk=max_unit(r1.disk(), r2.disk()),
-                       gpu=max_unit(r1.gpu(), r2.gpu()))
+                       gpu=max_unit(r1.gpu(), r2.gpu()),
+                       networkBandwidth=max_unit(r1.networkBandwidth(), r2.networkBandwidth()))
 
     return reduce(
         resource_max,
         map(cls.optional_resources, resources),
-        Resources(cpu=0, ram=0, disk=0, gpu=0))
+        Resources(cpu=0, ram=0, disk=0, gpu=0, networkBandwidth=0))
 
   @classmethod
   def finalization_wait_max(cls, waits):

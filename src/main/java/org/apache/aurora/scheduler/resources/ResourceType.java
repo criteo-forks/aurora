@@ -120,6 +120,21 @@ public enum ResourceType implements TEnum {
       "core(s)",
       4,
       false,
+      NOT_REVOCABLE),
+
+  /**
+   * Network bandwidth resource.
+   */
+  NETWORK_BANDWIDTH(
+      _Fields.NETWORK_BANDWIDTH,
+      SCALAR,
+      "network_bandwidth",
+      LONG,
+      Optional.empty(),
+      "Network Bandwidth",
+      "Mbps",
+      1,
+      false,
       NOT_REVOCABLE);
 
   public static void initializeEmptyCliArgsForTest() {

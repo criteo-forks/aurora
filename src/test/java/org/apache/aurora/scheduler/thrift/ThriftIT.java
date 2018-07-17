@@ -189,6 +189,7 @@ public class ThriftIT extends EasyMockTest {
         false,
         true,
         true,
+        true,
         false,
         20,
         1800,

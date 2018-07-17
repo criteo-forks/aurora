@@ -52,6 +52,7 @@ class Resources(Struct):
   ram  = Required(Integer)
   disk = Required(Integer)
   gpu  = Default(Integer, 0)
+  networkBandwidth = Default(Integer, 0)
 
 
 class Constraint(Struct):
