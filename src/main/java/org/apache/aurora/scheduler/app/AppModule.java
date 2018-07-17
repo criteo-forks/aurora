@@ -106,13 +106,14 @@ public class AppModule extends AbstractModule {
     this.configurationManagerSettings = requireNonNull(configurationManagerSettings);
   }
 
-  public AppModule(boolean allowGpuResource) {
+  public AppModule(boolean allowGpuResource, boolean allowNetworkbandwidthResource) {
     this(new ConfigurationManagerSettings(
         ImmutableSet.copyOf(ALLOWED_CONTAINER_TYPES.get()),
         ENABLE_DOCKER_PARAMETERS.get(),
         DEFAULT_DOCKER_PARAMETERS.get(),
         REQUIRE_DOCKER_USE_EXECUTOR.get(),
         allowGpuResource,
+        allowNetworkbandwidthResource,
         ENABLE_MESOS_FETCHER.get()));
   }
 

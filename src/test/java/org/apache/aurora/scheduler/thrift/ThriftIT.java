@@ -156,6 +156,7 @@ public class ThriftIT extends EasyMockTest {
         ImmutableMultimap.of(),
         false,
         true,
+        true,
         true);
 
     createThrift(configurationManagerSettings);

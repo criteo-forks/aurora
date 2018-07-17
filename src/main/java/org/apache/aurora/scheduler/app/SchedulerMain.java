@@ -89,6 +89,9 @@ public class SchedulerMain {
   @CmdLine(name = "allow_gpu_resource", help = "Allow jobs to request Mesos GPU resource.")
   private static final Arg<Boolean> ALLOW_GPU_RESOURCE = Arg.create(false);
 
+  @CmdLine(name = "allow_network_bandwidth_resource", help = "Allow jobs to request Mesos NETWORK_BANDWIDTH resource.")
+  private static final Arg<Boolean> ALLOW_NETWORK_BANDWIDTH_RESOURCE = Arg.create(false);
+
   @Inject private SingletonService schedulerService;
   @Inject private HttpService httpService;
   @Inject private SchedulerLifecycle schedulerLifecycle;
@@ -137,7 +140,7 @@ public class SchedulerMain {
     return Modules.combine(
         new LifecycleModule(),
         new StatsModule(),
-        new AppModule(ALLOW_GPU_RESOURCE.get()),
+        new AppModule(ALLOW_GPU_RESOURCE.get(), ALLOW_NETWORK_BANDWIDTH_RESOURCE.get()),
         new CronModule(),
         new DbModule.MigrationManagerModule(),
         DbModule.productionModule(Bindings.annotatedKeyFactory(Storage.Volatile.class)),

@@ -53,6 +53,7 @@ import org.apache.aurora.scheduler.storage.log.ThriftBackfill;
 import static java.util.Objects.requireNonNull;
 
 import static org.apache.aurora.scheduler.resources.ResourceType.GPUS;
+import static org.apache.aurora.scheduler.resources.ResourceType.NETWORK_BANDWIDTH;
 import static org.apache.aurora.scheduler.resources.ResourceType.PORTS;
 
 /**
@@ -117,6 +118,7 @@ public class ConfigurationManager {
     private final Multimap<String, String> defaultDockerParameters;
     private final boolean requireDockerUseExecutor;
     private final boolean allowGpuResource;
+    private final boolean allowNetworkBandwidthResource;
     private final boolean enableMesosFetcher;
 
     public ConfigurationManagerSettings(
@@ -125,6 +127,7 @@ public class ConfigurationManager {
         Multimap<String, String> defaultDockerParameters,
         boolean requireDockerUseExecutor,
         boolean allowGpuResource,
+        boolean allowNetworkBandwidthResource,
         boolean enableMesosFetcher) {
 
       this.allowedContainerTypes = requireNonNull(allowedContainerTypes);
@@ -132,6 +135,7 @@ public class ConfigurationManager {
       this.defaultDockerParameters = requireNonNull(defaultDockerParameters);
       this.requireDockerUseExecutor = requireDockerUseExecutor;
       this.allowGpuResource = allowGpuResource;
+      this.allowNetworkBandwidthResource = allowNetworkBandwidthResource;
       this.enableMesosFetcher = enableMesosFetcher;
     }
   }
@@ -367,6 +371,14 @@ public class ConfigurationManager {
         .isPresent()) {
 
       throw new TaskDescriptionException("GPU resource support is disabled in this cluster.");
+    }
+
+    if (!settings.allowNetworkBandwidthResource && config.getResources().stream()
+            .filter(r -> ResourceType.fromResource(r).equals(NETWORK_BANDWIDTH))
+            .findAny()
+            .isPresent()) {
+
+      throw new TaskDescriptionException("Network bandwidth resource support is disabled in this cluster.");
     }
 
     if (!settings.enableMesosFetcher && !config.getMesosFetcherUris().isEmpty()) {
