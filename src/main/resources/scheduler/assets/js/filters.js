@@ -120,6 +120,10 @@
         'GPUS': {
           field: 'numGpus',
           format: function (v) { return _.first(v)[this.field] + ' core(s)'; }
+        },
+        'NETWORK_BANDWIDTH': {
+          field: 'networkBandwidth',
+          format: function (v) { return _.first(v)[this.field] + ' Mbps'; }
         }
       };
 

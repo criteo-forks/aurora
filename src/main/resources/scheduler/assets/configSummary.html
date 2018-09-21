@@ -38,6 +38,10 @@
     <td>ports</td>
     <td>{{group.summary.schedulingDetail.resources | toResourceValue:'PORTS'}}</td>
   </tr>
+  <tr ng-if='(group.summary.schedulingDetail.resources | toResourceValue:"NETWORK_BANDWIDTH").length > 0'>
+    <td>network bandwidth</td>
+    <td>{{group.summary.schedulingDetail.resources | toResourceValue:'NETWORK_BANDWIDTH'}}</td>
+  </tr>
   <tr>
     <td class="cellLabel">constraints</td>
     <td colspan="2">{{group.summary.schedulingDetail.constraints}}</td>
