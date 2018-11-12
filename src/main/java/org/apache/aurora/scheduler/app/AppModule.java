@@ -146,6 +146,7 @@ public class AppModule extends AbstractModule {
             opts.app.defaultDockerParameters,
             opts.app.requireDockerUseExecutor,
             opts.main.allowGpuResource,
+            opts.main.allowNetworkBandwidthResource,
             opts.app.enableMesosFetcher,
             opts.app.allowContainerVolumes,
             opts.sla.minRequiredInstances,

@@ -57,6 +57,7 @@ import static java.util.Objects.requireNonNull;
 import static org.apache.aurora.scheduler.resources.ResourceType.CPUS;
 import static org.apache.aurora.scheduler.resources.ResourceType.DISK_MB;
 import static org.apache.aurora.scheduler.resources.ResourceType.GPUS;
+import static org.apache.aurora.scheduler.resources.ResourceType.NETWORK_BANDWIDTH;
 import static org.apache.aurora.scheduler.resources.ResourceType.PORTS;
 import static org.apache.aurora.scheduler.resources.ResourceType.RAM_MB;
 
@@ -99,6 +100,7 @@ public class ConfigurationManager {
     private final List<DockerParameter> defaultDockerParameters;
     private final boolean requireDockerUseExecutor;
     private final boolean allowGpuResource;
+    private final boolean allowNetworkBandwidthResource;
     private final boolean enableMesosFetcher;
     private final boolean allowContainerVolumes;
     private final Pattern allowedJobEnvironments;
@@ -111,6 +113,7 @@ public class ConfigurationManager {
         List<DockerParameter> defaultDockerParameters,
         boolean requireDockerUseExecutor,
         boolean allowGpuResource,
+        boolean allowNetworkBandwidthResource,
         boolean enableMesosFetcher,
         boolean allowContainerVolumes,
         int minRequiredInstances,
@@ -122,6 +125,7 @@ public class ConfigurationManager {
       this.defaultDockerParameters = requireNonNull(defaultDockerParameters);
       this.requireDockerUseExecutor = requireDockerUseExecutor;
       this.allowGpuResource = allowGpuResource;
+      this.allowNetworkBandwidthResource = allowNetworkBandwidthResource;
       this.enableMesosFetcher = enableMesosFetcher;
       this.allowContainerVolumes = allowContainerVolumes;
       this.allowedJobEnvironments = Pattern.compile(requireNonNull(allowedJobEnvironment));
@@ -459,6 +463,15 @@ public class ConfigurationManager {
         .isPresent()) {
 
       throw new TaskDescriptionException("GPU resource support is disabled in this cluster.");
+    }
+
+    if (!settings.allowNetworkBandwidthResource && config.getResources().stream()
+            .filter(r -> ResourceType.fromResource(r).equals(NETWORK_BANDWIDTH))
+            .findAny()
+            .isPresent()) {
+
+      throw new TaskDescriptionException(
+              "Network bandwidth resource support is disabled in this cluster.");
     }
 
     if (!settings.enableMesosFetcher && !config.getMesosFetcherUris().isEmpty()) {

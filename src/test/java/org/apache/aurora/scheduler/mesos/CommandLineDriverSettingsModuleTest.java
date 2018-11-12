@@ -83,6 +83,7 @@ public class CommandLineDriverSettingsModuleTest {
         Amount.of(1L, Time.MINUTES),
         false, // revocable
         false, // allow gpu
+        false, // disable network bandwidth
         false, // partition aware
         Optional.empty());
     assertEquals("", info.getPrincipal());
@@ -99,6 +100,7 @@ public class CommandLineDriverSettingsModuleTest {
         Amount.of(1L, Time.MINUTES),
         true, // revocable
         false, // allow gpu
+        false, // disable network bandwidth
         false, // partition aware
         Optional.empty());
     assertEquals("", info.getPrincipal());
@@ -116,6 +118,7 @@ public class CommandLineDriverSettingsModuleTest {
         Amount.of(1L, Time.MINUTES),
         false, // revocable
         true, // allow gpu
+        false, // disable network bandwidth
         false, // partition aware
         Optional.empty());
     assertEquals("", info.getPrincipal());
@@ -133,6 +136,7 @@ public class CommandLineDriverSettingsModuleTest {
         Amount.of(1L, Time.MINUTES),
         false, // revocable
         false, // allow gpu
+        false, // disable network bandwidth
         true, // partition aware
         Optional.empty());
     assertEquals("", info.getPrincipal());
@@ -150,6 +154,7 @@ public class CommandLineDriverSettingsModuleTest {
         Amount.of(1L, Time.MINUTES),
         false, // revocable
         false, // allow gpu
+        false, // disable network bandwidth
         false, // partition aware
         Optional.empty());
     assertEquals("auroraprincipal", info.getPrincipal());
@@ -166,6 +171,7 @@ public class CommandLineDriverSettingsModuleTest {
         Amount.of(1L, Time.MINUTES),
         true, // revocable
         true, // allow gpu
+        false, // disable network bandwidth
         false, // partition aware
         Optional.of(TEST_ROLE));
     assertEquals("auroraprincipal", info.getPrincipal());

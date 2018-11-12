@@ -134,6 +134,7 @@ Process 'process':
             "max_concurrency": 0,
             "resources": {
                  "gpu": 0,
+                 "networkBandwidth": 0,
                  "disk": 1073741824,
                  "ram": 1073741824,
                  "cpu": 1.0},

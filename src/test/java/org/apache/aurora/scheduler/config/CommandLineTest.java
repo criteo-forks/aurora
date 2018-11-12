@@ -148,6 +148,7 @@ public class CommandLineTest {
     expected.main.serversetEndpointName = "testing";
     expected.main.statsUrlPrefix = "testing";
     expected.main.allowGpuResource = true;
+    expected.main.allowNetworkBandwidthResource = true;
     expected.main.driverImpl = DriverKind.V0_DRIVER;
     expected.scheduling.maxScheduleAttemptsPerSec = 42;
     expected.scheduling.flappingThreshold = TEST_TIME;
@@ -302,6 +303,7 @@ public class CommandLineTest {
         "-serverset_endpoint_name=testing",
         "-viz_job_url_prefix=testing",
         "-allow_gpu_resource=true",
+        "-allow_network_bandwidth_resource=true",
         "-mesos_driver=V0_DRIVER",
         "-max_schedule_attempts_per_sec=42",
         "-flapping_task_threshold=42days",

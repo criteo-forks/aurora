@@ -91,6 +91,7 @@ public final class TaskTestUtil {
           true,
           true,
           true,
+          true,
           2,
           1800L,
           ConfigurationManager.DEFAULT_ALLOWED_JOB_ENVIRONMENTS);

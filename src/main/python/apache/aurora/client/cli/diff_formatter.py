@@ -118,7 +118,7 @@ class DiffFormatter(object):
       for summary in summaries:
         print_instances(format_ranges(summary.instances))
         self.context.print_out("with diff:\n")
-        self._diff_tasks([deepcopy(local_task)], [summary.config])
+        self._diff_tasks([deepcopy(local_task)], [deepcopy(summary.config)])
         self.context.print_out('')
     else:
       if summaries:

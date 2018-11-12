@@ -30,6 +30,7 @@ class ResourceType(Enum):
   DISK_MB = ('diskMb', 'Disk', ' MB', int, 3)
   PORTS = ('namedPort', 'Port', '', str, 4)
   GPUS = ('numGpus', 'GPU', ' GPU(s)', int, 5)
+  NETWORK_BANDWIDTH_MBPS = ('networkBandwidth', 'NetworkBandwidth', ' Mbps', int, 6)
 
   def __init__(self, field, display_name, display_unit, value_type, display_position):
     self._field = field

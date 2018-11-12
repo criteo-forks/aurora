@@ -64,7 +64,7 @@ HELLO_WORLD = Job(
   task=Task(
     name='main',
     processes=[Process(name='hello_world', cmdline='echo {{mesos.instance}}')],
-    resources=Resources(cpu=0.1, ram=64 * 1048576, disk=64 * 1048576, gpu=2),
+    resources=Resources(cpu=0.1, ram=64 * 1048576, disk=64 * 1048576, gpu=2, networkBandwidth=32),
   )
 )
 
@@ -112,6 +112,7 @@ HELLO_WORLD_EXECUTOR_DATA = {
     "max_concurrency": 0,
     "resources": {
       "gpu": 2,
+      "networkBandwidth": 32,
       "disk": 67108864,
       "ram": 67108864,
       "cpu": 0.1
@@ -162,6 +163,7 @@ def test_simple_config():
   assert Resource(diskMb=64) in list(tti.resources)
   assert Resource(namedPort='health') in list(tti.resources)
   assert Resource(numGpus=2) in list(tti.resources)
+  assert Resource(networkBandwidth=32) in list(tti.resources)
 
 
 def test_config_with_tier():

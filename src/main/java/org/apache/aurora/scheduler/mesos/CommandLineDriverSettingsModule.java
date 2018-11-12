@@ -112,10 +112,13 @@ public class CommandLineDriverSettingsModule extends AbstractModule {
 
   private final Options options;
   private final boolean allowGpuResource;
+  private final boolean allowNetworkBandwidthResource;
 
-  public CommandLineDriverSettingsModule(Options options, boolean allowGpuResource) {
+  public CommandLineDriverSettingsModule(Options options, boolean allowGpuResource,
+          boolean allowNetworkBandwidthResource) {
     this.options = options;
     this.allowGpuResource = allowGpuResource;
+    this.allowNetworkBandwidthResource = allowNetworkBandwidthResource;
   }
 
   @Override
@@ -137,6 +140,7 @@ public class CommandLineDriverSettingsModule extends AbstractModule {
             options.frameworkFailoverTimeout,
             options.receiveRevocableResources,
             allowGpuResource,
+            allowNetworkBandwidthResource,
             options.isPartitionAware,
             role);
     bind(FrameworkInfo.class)
@@ -182,6 +186,7 @@ public class CommandLineDriverSettingsModule extends AbstractModule {
       Amount<Long, Time> failoverTimeout,
       boolean revocable,
       boolean allowGpu,
+      boolean allowNetworkBandwidth,
       boolean enablePartitionAwareness,
       Optional<String> role) {
 
@@ -202,6 +207,8 @@ public class CommandLineDriverSettingsModule extends AbstractModule {
     if (allowGpu) {
       infoBuilder.addCapabilities(Capability.newBuilder().setType(GPU_RESOURCES));
     }
+
+    // NOTE: do nothing with allowNetworkBandwidth
 
     if (enablePartitionAwareness) {
       infoBuilder.addCapabilities(
