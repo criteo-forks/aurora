@@ -64,8 +64,10 @@ ignore = [
     'E126',  # continuation line over-indented for hanging indent
     'E129',  # visually indented line with same indent as next logical line
     'E131',  # continuation line unaligned for hanging indent
+    'E306',  # blank line before a nested definition
     'E731',  # do not assign a lambda expression, use a def
     'W503',  # line break before binary operator
+    'W504',  # line break after binary operator
 
     # These are a subset of the standard ignores pre-packaged for pycheck-pep8/pep8, but we need to
     # repeat here since we add our own above:
