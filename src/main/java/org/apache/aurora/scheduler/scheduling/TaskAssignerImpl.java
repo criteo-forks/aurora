@@ -235,6 +235,8 @@ public class TaskAssignerImpl implements TaskAssigner {
             o -> !matchesByOffer.containsKey(o.getOffer().getId().getValue())
                 && !isAgentReserved(o, groupKey, preemptionReservations));
 
+        LOG.info("After filtering reserved offers, we have {} offers for {}.", Iterables.size(matchingOffers), groupKey.toString());
+
         chosenOffer = Optional.ofNullable(Iterables.getFirst(matchingOffers, null));
       }
 

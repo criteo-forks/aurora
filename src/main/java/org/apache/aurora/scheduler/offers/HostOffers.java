@@ -34,6 +34,8 @@ import org.apache.aurora.scheduler.filter.SchedulingFilter.UnusedResource;
 import org.apache.aurora.scheduler.filter.SchedulingFilter.Veto;
 import org.apache.aurora.scheduler.storage.entities.IHostAttributes;
 import org.apache.mesos.v1.Protos;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static java.util.Objects.requireNonNull;
 
@@ -58,6 +60,8 @@ class HostOffers {
 
   // Keep track of the number of offers evaluated for vetoes when getting matching offers
   private final AtomicLong vetoEvaluatedOffers;
+
+  private static final Logger LOG = LoggerFactory.getLogger(HostOffers.class);
 
   HostOffers(StatsProvider statsProvider,
              OfferSettings offerSettings,
@@ -172,12 +176,17 @@ class HostOffers {
   synchronized Iterable<HostOffer> getAllMatching(TaskGroupKey groupKey,
                                                   ResourceRequest resourceRequest) {
 
+    Iterable<HostOffer> orderedOffers = offers.getOrdered(groupKey, resourceRequest);
+
+    LOG.info("There are {} offers in store matching ResourceRequest for {}.", Iterables.size(orderedOffers), groupKey.toString());
+
     return Iterables.unmodifiableIterable(
-        FluentIterable.from(offers.getOrdered(groupKey, resourceRequest))
+        FluentIterable.from(orderedOffers)
             .filter(o -> !isGloballyBanned(o))
             .filter(o -> !isStaticallyBanned(o, groupKey))
             .filter(HostOffer::hasCpuAndMem)
             .filter(o -> !isVetoed(o, resourceRequest, Optional.of(groupKey))));
+
   }
 
   private synchronized boolean isGloballyBanned(HostOffer offer) {
