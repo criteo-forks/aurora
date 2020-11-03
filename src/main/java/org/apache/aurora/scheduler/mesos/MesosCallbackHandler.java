@@ -54,6 +54,7 @@ import org.apache.mesos.v1.Protos.InverseOffer;
 import org.apache.mesos.v1.Protos.MasterInfo;
 import org.apache.mesos.v1.Protos.Offer;
 import org.apache.mesos.v1.Protos.OfferID;
+import org.apache.mesos.v1.Protos.Resource;
 import org.apache.mesos.v1.Protos.TaskStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -225,7 +226,12 @@ public interface MesosCallbackHandler {
             IHostAttributes attributes =
                 AttributeStore.Util.mergeOffer(storeProvider.getAttributeStore(), offer);
             storeProvider.getAttributeStore().saveHostAttributes(attributes);
-            log.info("Received offer: {}", offer.getId().getValue());
+            StringBuilder sb = new StringBuilder();
+            sb.append(String.format("Received offer: %s for %s => ",offer.getId().getValue(), offer.getHostname()));
+            for (Resource resource : offer.getResourcesList())
+                if (resource.hasScalar())
+                    sb.append(String.format("[%s %f]",resource.getName(),resource.getScalar().getValue()));
+            log.info(sb.toString());
             offersReceived.incrementAndGet();
             offerManager.add(new HostOffer(offer, attributes));
           }
