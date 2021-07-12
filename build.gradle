@@ -173,7 +173,7 @@ project(':ui') {
     script = file('node_modules/.bin/webpack')
   }
 
-  tasks.build.dependsOn(lint)
+  // tasks.build.dependsOn(lint)
   tasks.build.dependsOn(webpack)
   tasks.build.dependsOn(npm_test)
 }
