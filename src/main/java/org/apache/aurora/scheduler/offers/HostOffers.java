@@ -178,7 +178,8 @@ class HostOffers {
 
     Iterable<HostOffer> orderedOffers = offers.getOrdered(groupKey, resourceRequest);
 
-    LOG.info("There are {} offers in store matching ResourceRequest for {}.", Iterables.size(orderedOffers), groupKey.toString());
+    LOG.info("There are {} offers in store matching ResourceRequest for {}.",
+            Iterables.size(orderedOffers), groupKey.toString());
 
     return Iterables.unmodifiableIterable(
         FluentIterable.from(orderedOffers)

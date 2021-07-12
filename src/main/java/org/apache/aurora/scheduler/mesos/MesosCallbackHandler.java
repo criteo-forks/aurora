@@ -227,10 +227,15 @@ public interface MesosCallbackHandler {
                 AttributeStore.Util.mergeOffer(storeProvider.getAttributeStore(), offer);
             storeProvider.getAttributeStore().saveHostAttributes(attributes);
             StringBuilder sb = new StringBuilder();
-            sb.append(String.format("Received offer: %s for %s => ",offer.getId().getValue(), offer.getHostname()));
-            for (Resource resource : offer.getResourcesList())
-                if (resource.hasScalar())
-                    sb.append(String.format("[%s %f]",resource.getName(),resource.getScalar().getValue()));
+            sb.append(String.format("Received offer: %s for %s => ",
+                        offer.getId().getValue(),
+                        offer.getHostname()));
+            for (Resource resource : offer.getResourcesList()) {
+              if (resource.hasScalar()) {
+                sb.append(String.format("[%s %f]", resource.getName(),
+                            resource.getScalar().getValue()));
+              }
+            }
             log.info(sb.toString());
             offersReceived.incrementAndGet();
             offerManager.add(new HostOffer(offer, attributes));
