@@ -25,7 +25,7 @@ jobs:
       with:
         distribution: 'adopt'
         java-version: '8'
-    - name: Install dependencies
+    - name: Build & Test Aurora
       run: |
         python -m pip install --upgrade pip
         ./gradlew --no-daemon -Pq clean build
